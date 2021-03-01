@@ -1,21 +1,28 @@
 const mongoose = require("mongoose");
 
-const Task = mongoose.model("Task", {
-	description: {
-		type: String,
-		required: true,
-		trim: true,
-		required: true,
+const taskSchema = new mongoose.Schema(
+	{
+		description: {
+			type: String,
+			required: true,
+			trim: true,
+			required: true,
+		},
+		completed: {
+			type: Boolean,
+			default: false,
+		},
+		author: {
+			type: mongoose.Schema.Types.ObjectId,
+			required: true,
+			ref: "User",
+		},
 	},
-	completed: {
-		type: Boolean,
-		default: false,
+	{
+		timestamps: true,
 	},
-	author: {
-		type: mongoose.Schema.Types.ObjectId,
-		required: true,
-		ref: 'User'
-	},
-});
+);
+
+const Task = mongoose.model("Task", taskSchema);
 
 module.exports = Task;
